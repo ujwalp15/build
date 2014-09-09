@@ -21,19 +21,23 @@ ifneq (,$(filter cortex-a15 krait denver,$(TARGET_$(combo_2nd_arch_prefix)CPU_VA
 ifneq ($(strip $(USE_GCC_DEFAULTS)),true)
 	arch_variant_cflags := -mcpu=cortex-a15
 else
-	arch_variant_cflags := -march=armv7-a -mtune=cortex-a15
+	arch_variant_cflags := -mcpu=cortex-a15 -mfpu=neon-vfpv4
 endif
 else
 ifeq ($(strip $(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT)),cortex-a9)
-	arch_variant_cflags := -mcpu=cortex-a9
+	arch_variant_cflags := -mcpu=cortex-a9 -mfpu=neon
 else
 ifneq (,$(filter cortex-a8 scorpion,$(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT)))
-	arch_variant_cflags := -mcpu=cortex-a8
+	arch_variant_cflags := -mcpu=cortex-a8 -mfpu=neon
 else
 ifeq ($(strip $(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT)),cortex-a7)
-	arch_variant_cflags := -mcpu=cortex-a7
+	arch_variant_cflags := -mcpu=cortex-a7 -mfpu=neon-vfpv4
 else
-	arch_variant_cflags := -march=armv7-a
+ifeq ($(strip $(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT)),cortex-a5)
+	arch_variant_cflags := -mcpu=cortex-a7 -mfpu=neon-vfpv4
+else
+	arch_variant_cflags := -march=armv7-a -mfpu=neon
+endif
 endif
 endif
 endif
@@ -47,8 +51,7 @@ ifeq (denver,$(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT))
 endif
 
 arch_variant_cflags += \
-    -mfloat-abi=softfp \
-    -mfpu=neon
+    -mfloat-abi=softfp
 
 # For neon vfpv4 type, override -mfpu=neon with -mfpu=neon-vfpv4
 # Have the clang compiler ignore unknow flag option -mfpu=neon-vfpv4
