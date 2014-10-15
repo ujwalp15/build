@@ -22,6 +22,11 @@ ifneq ($(strip $(USE_GCC_DEFAULTS)),true)
 	arch_variant_cflags := -mcpu=cortex-a15
 else
 	arch_variant_cflags := -mcpu=cortex-a15 -mfpu=neon-vfpv4
+
+	# Fake an ARM compiler flag as these processors support LPAE which GCC/clang
+	# don't advertise.
+	arch_variant_cflags += -D__ARM_FEATURE_LPAE=1
+
 endif
 else
 ifeq ($(strip $(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT)),cortex-a9)
