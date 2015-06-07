@@ -77,7 +77,6 @@ PRODUCT_PACKAGES += \
     wifi-service
 
 # Prebuilt google webview
-
 PRODUCT_PACKAGES += \
     libwebviewchromium_plat_support \
     libwebviewchromium_loader
