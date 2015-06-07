@@ -44,7 +44,6 @@ endif
 else
 $(combo_2nd_arch_prefix)TARGET_AND_GCC_VERSION := $(TARGET_SM_AND)
 endif
-endif
 
 # Decouple kernel compiler version from android compiler version
 ifeq ($(strip $(TARGET_SM_KERNEL)),)
