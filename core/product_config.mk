@@ -179,7 +179,6 @@ include $(BUILD_SYSTEM)/node_fns.mk
 include $(BUILD_SYSTEM)/product.mk
 include $(BUILD_SYSTEM)/device.mk
 
-<<<<<<< HEAD
 # A PX build needs only the PX product makefiles.
 ifneq ($(PX_BUILD),)
   all_product_configs := $(shell find device -path "*/$(PX_BUILD)/px.mk")
