@@ -595,8 +595,8 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
 
   script.Print("****************************************")
   script.Print("****************************************")
-  script.Print("****************ProjectX****************")            
-  script.Print("***********Enjoy the experience*********")
+  script.Print("****************ProjectX***************")            
+  script.Print("***********Enjoy the experience********")
   script.Print("****************************************") 
   script.Print("****************************************")
 
