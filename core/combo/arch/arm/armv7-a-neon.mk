@@ -5,7 +5,8 @@ ARCH_ARM_HAVE_ARMV7A            := true
 ARCH_ARM_HAVE_VFP               := true
 ARCH_ARM_HAVE_VFP_D32           := true
 ARCH_ARM_HAVE_NEON              := true
-
+# If you're using toolchains that handle cortex and neon flags by default, set this to true.
+ifneq ($(strip $(USE_GCC_DEFAULTS)),true)
 CORTEX_A15_TYPE := \
 	cortex-a15 \
 	krait \
@@ -24,6 +25,7 @@ ifeq ($(strip $(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT)),cortex-a7)
 	arch_variant_cflags := -mcpu=cortex-a7
 else
 	arch_variant_cflags := -march=armv7-a
+endif
 endif
 endif
 endif
