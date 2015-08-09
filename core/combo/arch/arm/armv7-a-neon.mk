@@ -11,9 +11,18 @@ CORTEX_A15_TYPE := \
 	cortex-a15 \
 	krait \
 	denver
+else
+CORTEX_A15_TYPE := \
+       cortex-a15 \
+       krait
+endif
 
 ifneq (,$(filter cortex-a15 krait denver,$(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT)))
+ifneq ($(strip $(USE_GCC_DEFAULTS)),true)
 	arch_variant_cflags := -mcpu=cortex-a15
+else
+	arch_variant_cflags := -march=armv7-a -mtune=cortex-a15
+endif
 else
 ifeq ($(strip $(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT)),cortex-a9)
 	arch_variant_cflags := -mcpu=cortex-a9
