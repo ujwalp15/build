@@ -5,30 +5,21 @@ ARCH_ARM_HAVE_ARMV7A            := true
 ARCH_ARM_HAVE_VFP               := true
 ARCH_ARM_HAVE_VFP_D32           := true
 ARCH_ARM_HAVE_NEON              := true
-# If you're using toolchains that handle cortex and neon flags by default, set this to true.
-ifneq ($(strip $(USE_GCC_DEFAULTS)),true)
+
 CORTEX_A15_TYPE := \
 	cortex-a15 \
 	krait \
 	denver
-else
-CORTEX_A15_TYPE := \
-       cortex-a15 \
-       krait
-endif
 
+ifndef USE_GCC_DEFAULTS
 ifneq (,$(filter cortex-a15 krait denver,$(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT)))
-ifneq ($(strip $(USE_GCC_DEFAULTS)),true)
-	arch_variant_cflags := -mcpu=cortex-a15
-else
+	
 	arch_variant_cflags := -mcpu=cortex-a15 -mfpu=neon-vfpv4
-
 	# Fake an ARM compiler flag as these processors support LPAE which GCC/clang
 	# don't advertise.
 	arch_variant_cflags += -D__ARM_FEATURE_LPAE=1
 	arch_variant_ldflags := \
 		-Wl,--no-fix-cortex-a8
-
 endif
 else
 ifeq ($(strip $(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT)),cortex-a9)
@@ -60,6 +51,8 @@ endif
 endif
 endif
 endif
+else
+	arch_variant_cflags := $(USE_GCC_DEFAULTS)
 endif
 
 # arm64 doesn't like cortex-a15 in the kernel
